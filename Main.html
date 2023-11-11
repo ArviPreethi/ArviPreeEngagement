@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engagement Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1591969851586-adbbd4accf81?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'UnifrakturCook', cursive;
+    }
+    .invitation {
+      padding: 20px;
+      border-radius: 10px;
+      animation: pullCard 2s ease-in-out forwards;
+      background-image: url('https://images.unsplash.com/photo-1532224589403-0e70ee166b49?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      position: relative; /* Necessary for the snow effect */
+      overflow: hidden; /* Necessary for the snow effect */
+    }
+    @keyframes pullCard {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    .venue-link {
+      animation: fadeIn 2s ease-in-out forwards;
+      text-decoration: underline;
+      color: #fff;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+      color: #fff;
+    }
+    .countdown div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 10px;
+    }
+    .countdown div span {
+      font-size: 14px;
+    }
+    .couple-names {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeInNames 2s ease-in-out forwards;
+    }
+    @keyframes fadeInNames {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    .snowflakes {
+      pointer-events: none; /* Allow clicking through the snowflakes */
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .snowflake {
+      position: absolute;
+      color: #fff;
+      font-size: 2em;
+      will-change: transform;
+    }
+  </style>
+</head>
+<body>
+
+<div class="invitation">
+  <h1 class="text-center">Engagement Invitation</h1>
+  <div class="couple-names">
+    <p>Together with their families,</p>
+    <p>Arvi & Preethi</p>
+  </div>
+  <p>Dear Friends and Family,</p>
+  <p>With joy in our hearts, we invite you to share in the celebration of our engagement. Your presence on this special day means the world to us.</p>
+  <p>Date: 11-02-2024</p>
+  <p>Time: 6:30 PM</p>
+  <p>Venue: <a href="https://www.google.com/maps/dir//XQQQ%2BX4C,+Koot+Road,+Tamil+Nadu+605111/@11.9893973,79.7048009,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3a53673eed5e4219:0x77f054da8f121c08!2m2!1d79.7872028!2d11.9894093?entry=ttu" target="_blank" class="venue-link">Riytham Lawn's</a></p>
+  <p>Your presence will make our day more special.</p>
+  <div class="countdown" id="countdown"></div>
+  <div class="snowflakes"></div> <!-- Snowflakes container -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  const countDownDate = new Date("February 2, 2024 18:30:00").getTime();
+
+  const x = setInterval(function() {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML = `
+      <div>
+        <span>${days}</span>
+        <span>Days</span>
+      </div>
+      <div>
+        <span>${hours}</span>
+        <span>Hours</span>
+      </div>
+      <div>
+        <span>${minutes}</span>
+        <span>Minutes</span>
+      </div>
+      <div>
+        <span>${seconds}</span>
+        <span>Seconds</span>
+      </div>
+    `;
+
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("countdown").innerHTML = "The engagement has begun!";
+    }
+  }, 1000);
+
+  // Snowflakes
+  const snowflakes = document.querySelector('.snowflakes');
+
+  function createSnowflake() {
+    const snowflake = document.createElement('span');
+    snowflake.classList.add('snowflake');
+    snowflake.innerHTML = '&#10052;'; // Unicode for a snowflake
+
+    snowflake.style.left = `${Math.random() * 100}vw`;
+    snowflake.style.animationDuration = `${Math.random() * 3 + 3}s`;
+    snowflake.style.opacity = Math.random();
+    snowflakes.appendChild(snowflake);
+
+    snowflake.addEventListener('animationiteration', () => {
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${Math.random() * 3 + 3}s`;
+    });
+  }
+
+  for (let i = 0; i < 20; i++) {
+    createSnowflake();
+  }
+</script>
+</body>
+</html>
+    
